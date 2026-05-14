@@ -1,0 +1,51 @@
+# meetcap user config. Copy to ~/.config/meetcap/config.toml and edit.
+# All sections are optional; defaults are shown.
+
+[audio]
+# Override PipeWire source names. Leave commented to auto-resolve from `pw-dump` at start.
+# mic_source = "alsa_input.pci-0000_00_1f.3-platform-sof_sdw.HiFi__hw_sofsoundwire_4__source"
+# sink_monitor = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__hw_sofsoundwire_2__sink.monitor"
+# Raise mic volume to this PipeWire level on record start if currently below it.
+# Never lowers. 1.0 = unity gain (Plasma UI caps the slider at 1.5 / 150%);
+# wpctl can push up to ~3.0. Default 2.0 lets Zoom/Teams hear you well.
+# Set to null to disable.
+mic_boost_to = 2.0
+
+[transcription]
+# "local"  = on-device faster-whisper + pyannote (default; requires
+#            `uv sync --extra local` and HF_TOKEN in .env, plus EULA accepted at
+#            huggingface.co/pyannote/speaker-diarization-community-1).
+# "openai" = cloud diarize (requires OPENAI_API_KEY).
+backend = "local"
+model = "gpt-4o-transcribe-diarize"
+# Local-backend only (ignored when backend = "openai")
+local_model = "large-v3"          # or: large-v3-turbo, medium, small
+local_compute_type = "float16"    # or: int8_float16, int8
+# Pin transcription language to skip auto-detect (e.g. "he", "en"). null = auto.
+# language = "he"
+summary_enabled = true
+# "ollama"  = local via Ollama HTTP API at http://localhost:11434 (default)
+# "openai"  = cloud Chat Completions (needs OPENAI_API_KEY)
+summary_provider = "ollama"
+# When provider="ollama": llama3.1:8b (default, fits 5 GB VRAM), qwen2.5:14b, ...
+# When provider="openai": gpt-5.4-mini, gpt-5.5, gpt-5.4-nano, ...
+summary_model = "llama3.1:8b"
+# Used to populate cost_estimate_usd in metadata.json. Local is free; bump to
+# ~0.006 for the cloud diarize backend. null to omit the field entirely.
+cost_per_minute_usd = 0.0
+
+[drive]
+parent_folder_id = "10RTchUbN_ESFsgfA5tlTZxyF-yBbXM6r"
+convert_markdown_to_doc = true
+
+[retention]
+delete_local_after_upload = false
+
+[speakers]
+# Label your own segments get in transcripts once you've run `meetcap enroll`.
+self_name = "me"
+
+[notifications]
+# Desktop notification (libnotify / notify-send) when the tray's post-capture
+# transcribe+upload subprocess finishes. Set false to silence.
+enabled = true

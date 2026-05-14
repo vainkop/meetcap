@@ -1,0 +1,52 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.token.json
+google-token.json
+google-client-secret*.json
+
+# Reference material (the OpenAI announcement PDF lives at repo root)
+*.pdf
+
+# Recordings / audio artifacts
+*.flac
+*.wav
+*.mp3
+*.opus
+*.m4a
+*.ogg
+
+# Python build / cache
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env/
+dist/
+build/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Tooling caches
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Node (if any tooling shows up later)
+node_modules/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+SESSION_RESUME.md

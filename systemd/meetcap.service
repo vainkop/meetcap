@@ -1,0 +1,18 @@
+[Unit]
+Description=meetcap meeting auto-capture watcher
+After=pipewire.service pipewire-pulse.service wireplumber.service
+Wants=pipewire.service pipewire-pulse.service wireplumber.service
+
+[Service]
+Type=simple
+# {REPO_ROOT} and {UV} are substituted by `meetcap install-service` at install
+# time so this template works regardless of where the repo lives.
+ExecStart={UV} run --project {REPO_ROOT} meetcap tray
+Restart=on-failure
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+# Inherits DBUS / DISPLAY env from the user session so the tray indicator can
+# attach to the StatusNotifierItem host and xdotool can read window titles.
+
+[Install]
+WantedBy=default.target
